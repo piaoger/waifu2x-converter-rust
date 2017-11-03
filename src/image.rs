@@ -57,8 +57,7 @@ impl Image {
             return tmp_img.to_dynamic_image();
         }
 
-        let mut dimg = piston_image::DynamicImage::new_rgb8(self.width as u32,
-                                                            self.height as u32);
+        let mut dimg = piston_image::DynamicImage::new_rgb8(self.width as u32, self.height as u32);
         let s0 = &self.data[0];
         let s1 = &self.data[1];
         let s2 = &self.data[2];
@@ -68,9 +67,13 @@ impl Image {
                 let r = std::cmp::min(255, std::cmp::max(0, (s0[off + j] * 255.0) as i32));
                 let g = std::cmp::min(255, std::cmp::max(0, (s1[off + j] * 255.0) as i32));
                 let b = std::cmp::min(255, std::cmp::max(0, (s2[off + j] * 255.0) as i32));
-                dimg.put_pixel(j as u32, i as u32, piston_image::Rgba {
-                    data: [r as u8, g as u8, b as u8, 0] 
-                });
+                dimg.put_pixel(
+                    j as u32,
+                    i as u32,
+                    piston_image::Rgba {
+                        data: [r as u8, g as u8, b as u8, 0],
+                    },
+                );
             }
         }
         dimg
@@ -83,7 +86,9 @@ impl Image {
 
         for v in self.data.iter() {
             let mut x: Vec<f32> = Vec::with_capacity(stride * stride_h);
-            unsafe { x.set_len(stride * stride_h); }
+            unsafe {
+                x.set_len(stride * stride_h);
+            }
             for y in 0..self.height {
                 let off_src = y * self.strides[0];
                 let off_dst = y * stride * 2;
@@ -115,7 +120,9 @@ impl Image {
 
         for v in self.data.iter() {
             let mut x: Vec<f32> = Vec::with_capacity(stride * stride_h);
-            unsafe { x.set_len(stride * stride_h); }
+            unsafe {
+                x.set_len(stride * stride_h);
+            }
             for y in 0..self.height {
                 let off_src = y * self.strides[0];
                 let off_dst = (padding + y) * stride + padding;
@@ -148,7 +155,7 @@ impl Image {
             let off_lb = (self.height - padding - 1) * stride + padding;
             let off_rb = off_lb + self.width - padding * 2 - 1;
 
-            for i in 0..self.width - padding * 2{
+            for i in 0..self.width - padding * 2 {
                 let vt = x[off_lt + i];
                 let vb = x[off_lb + i];
                 for j in 0..padding {
@@ -211,7 +218,7 @@ impl Image {
             let r = d[0][i] * 255.0;
             let g = d[1][i] * 255.0;
             let b = d[2][i] * 255.0;
-            d[0][i]  = (0.0 + (0.299 * r) + (0.587 * g) + (0.114 * b)) / 255.0;
+            d[0][i] = (0.0 + (0.299 * r) + (0.587 * g) + (0.114 * b)) / 255.0;
             d[1][i] = (128.0 - (0.168736 * r) - (0.331264 * g) + (0.5 * b)) / 255.0;
             d[2][i] = (128.0 + (0.5 * r) - (0.418688 * g) - (0.081312 * b)) / 255.0;
         }

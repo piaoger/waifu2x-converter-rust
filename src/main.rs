@@ -5,11 +5,11 @@ extern crate rustc_serialize;
 extern crate image as piston_image;
 extern crate time;
 
-use std::str::FromStr;
-use std::path::Path;
+use getopts::Options;
 use std::fs::File;
 use std::io::BufReader;
-use getopts::Options;
+use std::path::Path;
+use std::str::FromStr;
 
 mod cnn;
 mod model;
@@ -31,7 +31,7 @@ fn main() {
             println!("{}", f.to_string());
             print_usage(&args[0], opts);
             return;
-        }
+        },
     };
     if matches.opt_present("h") {
         print_usage(&args[0], opts);
@@ -42,22 +42,26 @@ fn main() {
     let out_path = matches.opt_str("o").unwrap();
     let model_dir = matches.opt_str("d").unwrap();
     let scale = match matches.opt_str("s") {
-        Some(x) => match u32::from_str(x.as_ref()) {
-            Ok(v) => v,
-            Err(_) => panic!("cannot parse {} to unsigned-integer", x),
+        Some(x) => {
+            match u32::from_str(x.as_ref()) {
+                Ok(v) => v,
+                Err(_) => panic!("cannot parse {} to unsigned-integer", x),
+            }
         },
-        None => 2
+        None => 2,
     };
     let method = match matches.opt_str("m") {
         Some(x) => x,
-        None => "scale".to_string()
+        None => "scale".to_string(),
     };
     let noise_level = match matches.opt_str("n") {
-        Some(x) => match x.as_ref() {
-            "1" | "2" => x,
-            _ => panic!("unknown noise-level {}", x),
+        Some(x) => {
+            match x.as_ref() {
+                "1" | "2" => x,
+                _ => panic!("unknown noise-level {}", x),
+            }
         },
-        None => "1".to_string()
+        None => "1".to_string(),
     };
 
     let img = match File::open(&in_path) {
@@ -86,19 +90,15 @@ fn main() {
     perf.other_time += time::precise_time_s() - start;
 
     let out_img = match method.as_ref() {
-        "scale" => {
-            scale2(src_img, &scale_model, &mut perf)
-        },
-        "noise" => {
-            filter(src_img, &noise_model, &mut perf)
-        },
+        "scale" => scale2(src_img, &scale_model, &mut perf),
+        "noise" => filter(src_img, &noise_model, &mut perf),
         "noise_scale" => {
             let tmp = filter(src_img, &noise_model, &mut perf);
             scale2(tmp, &scale_model, &mut perf)
         },
         _ => {
             panic!("unknown method \"{}\"", method);
-        }
+        },
     };
 
     let total_time = time::precise_time_s() - start;
@@ -107,9 +107,12 @@ fn main() {
     out_img.to_dynamic_image().save(&mut out_strm, out_img_format).unwrap();
 
     println!("total: {:.2} [ms]", total_time * 1000.0);
-    println!("cnn: {:.2} [GFLOPS], {:.2} [ms] ({:.2} G fp-ops)",
-             (perf.cnn_flo as f64) / 1000000000.0 / perf.cnn_time,
-             perf.cnn_time * 1000.0, perf.cnn_flo as f64 / 1000000000.0);
+    println!(
+        "cnn: {:.2} [GFLOPS], {:.2} [ms] ({:.2} G fp-ops)",
+        (perf.cnn_flo as f64) / 1000000000.0 / perf.cnn_time,
+        perf.cnn_time * 1000.0,
+        perf.cnn_flo as f64 / 1000000000.0
+    );
     println!("other: {:.2} [ms]", perf.other_time * 1000.0);
 }
 

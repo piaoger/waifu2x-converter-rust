@@ -1,7 +1,7 @@
 use std::convert::AsRef;
-use std::path::Path;
 use std::fs::File;
-use std::io::{Error,Read};
+use std::io::{Error, Read};
+use std::path::Path;
 
 use rustc_serialize::json;
 
