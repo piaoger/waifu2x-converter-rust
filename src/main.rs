@@ -1,4 +1,4 @@
-#![feature(step_by)]
+ #![feature(iterator_step_by)]
 
 extern crate getopts;
 extern crate rustc_serialize;
@@ -8,7 +8,7 @@ extern crate time;
 use std::str::FromStr;
 use std::path::Path;
 use std::fs::File;
-
+use std::io::BufReader;
 use getopts::Options;
 
 mod cnn;
@@ -61,8 +61,9 @@ fn main() {
     };
 
     let img = match File::open(&in_path) {
-        Ok(in_strm) => {
-            piston_image::load(in_strm, path_to_image_format(&in_path)).unwrap()
+        Ok(file) => {
+            let reader = BufReader::new(file);
+            piston_image::load(reader, path_to_image_format(&in_path)).unwrap()
         },
         _ => panic!("open error"),
     };
