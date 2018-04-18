@@ -212,6 +212,10 @@ impl Image {
         self._rgb_to_i444();
     }
 
+    // For better color space conversion, we can look into python PIL which uses a Table based method.
+   // https://github.com/hobson/pil/blob/master/libImaging/ConvertYCbCr.c
+   // We will get better performace with lookup table
+   // https://en.wikipedia.org/wiki/YCbCr: JPEG conversion
     fn _rgb_to_i444(&mut self) {
         let d = &mut self.data;
         for i in 0..d[0].len() {
@@ -225,6 +229,7 @@ impl Image {
         self.color_space = ColorSpace::I444;
     }
 
+    // https://en.wikipedia.org/wiki/YCbCr: JPEG conversion
     fn _i444_to_rgb(&mut self) {
         let d = &mut self.data;
         for i in 0..d[0].len() {

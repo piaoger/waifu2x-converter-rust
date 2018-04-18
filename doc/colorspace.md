@@ -1,7 +1,7 @@
 
 ## Color Space
 
-在Waifu2x中，看到有颜色转换: RGABA --> RGB --> YCbCr --> Y
+Color space conversion in Waifu2x: RGABA --> RGB --> YCbCr --> Y
 
 YCbCr
 
@@ -15,7 +15,7 @@ YCbCr
    Cr：反映了RGB输入信号红色部分与RGB信号亮度值之间的差异。
 
 
-https://en.wikipedia.org/wiki/YCbCr
+[Wiki: YCBCr](https://en.wikipedia.org/wiki/YCbCr}
 
 
 See: http://blog.csdn.net/alfredtofu/article/details/6303305

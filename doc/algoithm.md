@@ -3,7 +3,7 @@
 
 ##  convolution filter
 
-http://stackoverflow.com/questions/19413386/gaussian-blur-mean-filter-convolution
+[gaussian blur mean filter](http://stackoverflow.com/questions/19413386/gaussian-blur-mean-filter-convolution)
 
 
 ## nn.SpatialConvolution
@@ -42,3 +42,7 @@ The output value of the layer can be precisely described as:
 output[i][j][k] = bias[k]
   + sum_l sum_{s=1}^kW sum_{t=1}^kH weight[s][t][l][k]
                                     * input[dW*(i-1)+s)][dH*(j-1)+t][l]
+
+# convolutional
+
+http://blog.csdn.net/jia20003/article/details/7038938
