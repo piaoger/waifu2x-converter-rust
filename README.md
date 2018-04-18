@@ -5,8 +5,8 @@ waifu2xをHSAで動かす予定！
 ## TODO
 
 * [x] Rustで取り敢えず動く版
-* [ ] Rust高速版 (シングルスレッド)
-* [ ] Rust高速版 (マルチスレッド)
+* [ ] Rust高速版 (シングルスレッド, single thread)
+* [ ] Rust高速版 (マルチスレッド, multi-thread)
 * [ ] HSAで取り敢えず動く版
 * [ ] HSA高速版
 
