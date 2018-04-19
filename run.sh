@@ -5,10 +5,11 @@ APP_BIN_DIR=$THIS_DIR/../bin
 
 bootstrap() {
 
-    export WAIFU2X_INPUT_IMAGE=./assets/pics/render-480.jpg
+    export WAIFU2X_INPUT_IMAGE_SMALL=./assets/pics/render-480.jpg
+    export WAIFU2X_INPUT_IMAGE_LARGE=./assets/pics/render-960.jpg
 
     export WAIFU2X_TARGT_IMAGE_SMALL=./target/render-small.jpg
-    export WAIFU2X_TARGT_IMAGE_RENDER=./target/render.jpg
+    export WAIFU2X_TARGT_IMAGE_LARGE=./target/render.jpg
 
     export WAIFU2X_TARGT_IMAGE_GM=./target/render.gm.jpg
     export WAIFU2X_TARGT_IMAGE_N1=./target/render.n1.jpg
@@ -22,8 +23,8 @@ run() {
     cargo build --release
 
     echo "copy file to target"
-    cp -f $WAIFU2X_INPUT_IMAGE $WAIFU2X_TARGT_IMAGE_SMALL
-    cp -f $WAIFU2X_INPUT_IMAGE $WAIFU2X_TARGT_IMAGE_RENDER
+    cp -f $WAIFU2X_INPUT_IMAGE_SMALL $WAIFU2X_TARGT_IMAGE_SMALL
+    cp -f $WAIFU2X_INPUT_IMAGE_LARGE $WAIFU2X_TARGT_IMAGE_LARGE
 
     echo "scale 2x by graphicsmagick"
     gm convert $WAIFU2X_TARGT_IMAGE_SMALL -resize 960x540 $WAIFU2X_TARGT_IMAGE_GM
