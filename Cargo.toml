@@ -9,6 +9,7 @@ getopts = "*"
 image = "*"
 rustc-serialize = "*"
 time = "*"
+simd = "0.2.0"
 
 [dependencies.hsa]
 git = "https://github.com/kazuki/rust-hsa.git"

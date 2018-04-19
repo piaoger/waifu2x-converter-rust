@@ -13,7 +13,7 @@ bootstrap() {
 
 run_test_case() {
 
-	local test_case_name=$1
+    local test_case_name=$1
     local input_image_small=${THIS_DIR}/assets/pics/${test_case_name}/render-480.jpg
     local input_image_large=${THIS_DIR}/assets/pics/${test_case_name}/render-960.jpg
 
@@ -46,8 +46,8 @@ run_test_case() {
 
 run_test_cases() {
 
-	run_test_case livingroom
-	run_test_case bookshelf
+    run_test_case livingroom
+    run_test_case bookshelf
 }
 
 
