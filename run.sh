@@ -1,12 +1,13 @@
 #!/bin/bash
 
-THIS_DIR=$(cd ${0%/*} && echo $PWD) 
+THIS_DIR=$(cd ${0%/*} && echo $PWD)
 
 bootstrap() {
 
     export PATH=$THIS_DIR/target/release:$PATH
     export WAIFU2X_MODEL_DIR=${THIS_DIR}/assets/models/vgg_7/photo
 
+    # build waifu2x
     cargo build --release
 }
 
@@ -40,7 +41,7 @@ run_test_case() {
 
     echo "  scale 2x and denoise by waifu2x"
     waifu2x-hsa -i $target_image_small -o $target_image_n2 -m noise_scale -n 2  -s 2 -d $WAIFU2X_MODEL_DIR
-  
+
 }
 
 run_test_cases() {
